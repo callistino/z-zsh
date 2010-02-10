@@ -64,7 +64,7 @@ z() {
   # if we hit enter on a completion just go there
   [ -d "$last" ] && cd "$last" && return
   [ -f "$datafile" ] || return
-  cd="$(awk -v t="$(date +%s)" -v list="$list" -v typ="$typ" -v q="$fnd" -v tmpfl="$datafile.tmp" -F"|" '
+  local cd="$(awk -v t="$(date +%s)" -v list="$list" -v typ="$typ" -v q="$fnd" -v tmpfl="$datafile.tmp" -F"|" '
    function frecent(rank, time) {
     dx = t-time
     if( dx < 3600 ) return rank*4
@@ -133,7 +133,4 @@ z() {
  fi
 }
 # tab completion
-complete -C 'z --complete "$COMP_LINE"' z
-# populate directory list. avoid clobbering other PROMPT_COMMANDs.
-echo $PROMPT_COMMAND | grep -q "z"
-[ $? -gt 0 ] && PROMPT_COMMAND='z --add "$(pwd -P)";'"$PROMPT_COMMAND"
+# complete -C 'z --complete "$COMP_LINE"' z
